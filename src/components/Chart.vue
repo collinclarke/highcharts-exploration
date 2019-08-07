@@ -48,7 +48,7 @@
         </div>
         <div id="seriesColor">
           <h3>Select color of the series:</h3>
-          <div class="row" v-for="(participant, index) in chartOptions.series" :key="index">
+          <div class="color-picker" v-for="(participant, index) in chartOptions.series" :key="index">
             <p style="display: inline-block; margin-right: 1rem;">{{participant.name}}</p>
             <input
               id="colorPicker"
@@ -236,6 +236,10 @@ select {
   max-width: 20rem;
   background: #eee;
   border: 0;
+  height: 2rem;
+  text-indent: .5rem;
+  margin: .5rem .25rem;
+  border-radius: .15rem;
 }
 
 .data-inputs {
@@ -246,6 +250,11 @@ select {
 .numberInput {
   width: 100%;
   margin: 0.5rem 2rem;
+}
+
+.color-picker {
+  display: inline-block;
+  margin-right: 2rem;
 }
 
 ::v-deep .tooltip {
