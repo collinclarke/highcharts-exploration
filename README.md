@@ -17,6 +17,6 @@ npm run serve
 
 ## Live
 
-https://collinclarke.github.com/highcharts-exploration
+https://collinclarke.github.io/highcharts-exploration
 
 
