@@ -11,9 +11,13 @@
           <div v-for="(label, index) in chartOptions.xAxis.categories" :key="index">
             <input v-model="chartOptions.xAxis.categories[index]"/>
           </div>
-          <!-- <label>Max Lines
-            <input type="number" v-model="maxLines">
-          </label> -->
+          <br>
+          <label>Font Size
+            <input type="number" v-model="chartOptions.fontSize"/>
+          </label>
+          <label>Max Lines
+            <input type="number" v-model="chartOptions.maxLines"/>
+          </label>
         </div>
       </div>
       <div class="row">
@@ -24,6 +28,7 @@
         <div id="chartType">
           <h3>Select chart type:</h3>
           <select v-model="chartType">
+            <option>Bar</option>
             <option>Spline</option>
             <option>AreaSpline</option>
             <option>Line</option>
@@ -92,6 +97,8 @@ export default {
         title: {
           text: "Stacked bar chart"
         },
+        fontSize: 12,
+        maxLines: 5,
         xAxis: {
           categories: [
             "More at each you 44 epic cooperative the game. 44 carry increase number future Unlike is. For 2 production wil cards the wil.",
@@ -105,7 +112,9 @@ export default {
               textOverflow: "none"
             },
             formatter: function() {
-              return `<div class="label">${this.value}</div>`;
+              const maxLines = this.chart.userOptions.maxLines
+              const fontSize = this.chart.userOptions.fontSize
+              return `<div class="label" style="-webkit-line-clamp: ${maxLines}; font-size: ${fontSize}px;">${this.value}</div>`;
             },
             useHTML: true
           }
@@ -252,7 +261,6 @@ select {
 ::v-deep .label {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
 </style>
