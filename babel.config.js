@@ -3,7 +3,7 @@ module.exports = {
     '@vue/app'
   ],
   publicPath: process.env.NODE_ENV === 'production'
-      ? '/my-project/'
+      ? '/highcharts-exploration/'
       : '/'
   }
 }
