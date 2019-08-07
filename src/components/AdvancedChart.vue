@@ -5,8 +5,10 @@
 <script>
 import Highcharts from 'highcharts' 
 import highchartsMore from 'highcharts/highcharts-more'
-highchartsMore(Highcharts);
+import annotations from 'highcharts/modules/annotations'
 import { Chart } from 'highcharts-vue'
+highchartsMore(Highcharts)
+annotations(Highcharts)
 export default {
   components: {
     highcharts: Chart

@@ -19,7 +19,7 @@ export default {
     Chart,
     AdvancedChart,
     BoxPlot,
-    Annotations
+    Annotations,
   }
 }
 </script>
