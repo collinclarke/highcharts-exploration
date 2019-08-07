@@ -96,6 +96,9 @@
 
 <script>
 import { Chart } from "highcharts-vue";
+import Highcharts from "highcharts";
+import highchartsCustomEvents from 'highcharts-custom-events'
+highchartsCustomEvents(Highcharts)
 export default {
   components: {
     highcharts: Chart
@@ -114,7 +117,10 @@ export default {
       updateArgs: [true, true, { duration: 1000 }],
       chartOptions: {
         chart: {
-          type: "bar"
+          type: "bar",
+          events: {
+            click: this.handleClick
+          }
         },
         title: {
           text: "Stacked bar chart"
@@ -130,14 +136,13 @@ export default {
             "Production cooperative Panic most epic, take wil end for cooperative. The future games units this to game epic in. Low to high another ability unused units, Whats based cooperative Panic in 44  an infection games.  an increase games, of for location number Whats working players. Games Whats game to game over, one unused in number working Whats Total you the. Carry of game location take wil game end. Triggered spend at low to high the, unused 44 to low to high infection the. You most wil you, to is carry based resolve game triggered the you games. Of upgrades number upgrades no of production future Total."
           ],
           labels: {
+            events: {
+              click: this.handleClick,
+            },
             style: {
               textOverflow: "none"
             },
-            formatter: function() {
-              const maxLines = this.chart.userOptions.maxLines;
-              const fontSize = this.chart.userOptions.fontSize;
-              return `<div class="label" style="-webkit-line-clamp: ${maxLines}; font-size: ${fontSize}px;">${this.value}</div>`;
-            },
+            formatter: this.formatLabel,
             useHTML: true
           }
         },
@@ -160,6 +165,11 @@ export default {
         plotOptions: {
           series: {
             stacking: "normal"
+          },
+          bar: {
+            events: {
+              click: this.handleClick
+            }
           }
         },
         tooltip: {
@@ -241,6 +251,15 @@ export default {
     },
     updateColor($event, idx) {
       this.chartOptions.series[idx].color = $event.target.value;
+    },
+    formatLabel (label) {
+      const maxLines = this.chartOptions.maxLines;
+      const fontSize = this.chartOptions.fontSize;
+      return `<div class="label" style="-webkit-line-clamp: ${maxLines}; font-size: ${fontSize}px;">${label.value}</div>`;
+    },
+    handleClick(mouseEvent) {
+      console.log("CLICKED", mouseEvent)
+      debugger
     }
   }
 };
