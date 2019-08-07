@@ -1,16 +1,25 @@
 <template>
   <div id="app">
     <chart/>
+    <advanced-chart/>
+    <box-plot/>
+    <annotations />
   </div>
 </template>
 
 <script>
 import Chart from './components/Chart.vue'
+import AdvancedChart from './components/AdvancedChart.vue'
+import BoxPlot from './components/BoxPlot.vue'
+import Annotations from './components/Annotations.vue'
 
 export default {
   name: 'app',
   components: {
-    Chart
+    Chart,
+    AdvancedChart,
+    BoxPlot,
+    Annotations
   }
 }
 </script>

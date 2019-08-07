@@ -1,29 +1,47 @@
 <template>
   <div class="chartElem">
     <section class="column">
-      <highcharts class="chart" :options="chartOptions" :updateArgs="updateArgs"></highcharts>
+      <highcharts
+        class="chart"
+        :style="{'height': chartHeight + 'vh', 'width': chartWidth + '%'}"
+        ref="highchart"
+        :options="chartOptions"
+        :updateArgs="updateArgs"
+      ></highcharts>
     </section>
     <section class="column">
+      <div class="row">
+        <label style="display: block;">
+          Change Chart Height
+          <input v-model="chartHeight" type="number" />
+        </label>
+        <label style="display: block;">
+          Change Chart Width
+          <input v-model="chartWidth" type="number" />
+        </label>
+      </div>
       <div class="row">
         <div>
           <h3>Change the labels:</h3>
           <h4>Categories:</h4>
           <div v-for="(label, index) in chartOptions.xAxis.categories" :key="index">
-            <input v-model="chartOptions.xAxis.categories[index]"/>
+            <input v-model="chartOptions.xAxis.categories[index]" />
           </div>
-          <br>
-          <label>Font Size
-            <input type="number" v-model="chartOptions.fontSize"/>
+          <br />
+          <label>
+            Font Size
+            <input type="number" v-model="chartOptions.fontSize" />
           </label>
-          <label>Max Lines
-            <input type="number" v-model="chartOptions.maxLines"/>
+          <label>
+            Max Lines
+            <input type="number" v-model="chartOptions.maxLines" />
           </label>
         </div>
       </div>
       <div class="row">
         <div id="title">
           <h3>Set chart title dynamically:</h3>
-          <input type="text" v-model="title"/>
+          <input type="text" v-model="title" />
         </div>
         <div id="chartType">
           <h3>Select chart type:</h3>
@@ -48,7 +66,11 @@
         </div>
         <div id="seriesColor">
           <h3>Select color of the series:</h3>
-          <div class="color-picker" v-for="(participant, index) in chartOptions.series" :key="index">
+          <div
+            class="color-picker"
+            v-for="(participant, index) in chartOptions.series"
+            :key="index"
+          >
             <p style="display: inline-block; margin-right: 1rem;">{{participant.name}}</p>
             <input
               id="colorPicker"
@@ -70,7 +92,7 @@
           </div>
         </div>
       </div>
-      </section>
+    </section>
   </div>
 </template>
 
@@ -84,6 +106,8 @@ export default {
     return {
       title: "Stacked bar chart",
       points: [10, 0, 8, 2, 6, 4, 5, 5],
+      chartHeight: 80,
+      chartWidth: 100,
       maxLines: 5,
       titleUpdated: false,
       chartType: "Bar",
@@ -112,8 +136,8 @@ export default {
               textOverflow: "none"
             },
             formatter: function() {
-              const maxLines = this.chart.userOptions.maxLines
-              const fontSize = this.chart.userOptions.fontSize
+              const maxLines = this.chart.userOptions.maxLines;
+              const fontSize = this.chart.userOptions.fontSize;
               return `<div class="label" style="-webkit-line-clamp: ${maxLines}; font-size: ${fontSize}px;">${this.value}</div>`;
             },
             useHTML: true
@@ -126,7 +150,14 @@ export default {
           }
         },
         legend: {
-          reversed: true
+          backgroundColor: "#FFFFFF",
+          reversed: true,
+          useHTML: true,
+          labelFormatter: function() {
+            const maxLines = this.chart.userOptions.maxLines;
+            const fontSize = this.chart.userOptions.fontSize;
+            return `<div class="legend-label" style="-webkit-line-clamp: ${maxLines}; font-size: ${fontSize}px;">${this.name} (click to hide)</div>`;
+          }
         },
         plotOptions: {
           series: {
@@ -151,17 +182,17 @@ export default {
         series: [
           {
             name: "John",
-            color: '#eeeeee',
+            color: "#eeeeee",
             data: [5, 3, 4, 7, 2]
           },
           {
             name: "Jane",
-            color: '#eeeeee',
+            color: "#eeeeee",
             data: [2, 2, 3, 2, 1]
           },
           {
             name: "Joe",
-            color: '#eeeeee',
+            color: "#eeeeee",
             data: [3, 4, 4, 2, 5]
           }
         ]
@@ -176,8 +207,14 @@ export default {
       : (this.colorInputIsSupported = false);
   },
   watch: {
+    chartHeight() {
+      this.redraw();
+    },
+    chartWidth() {
+      this.redraw();
+    },
     title(newValue) {
-      this.titleUpdated = true
+      this.titleUpdated = true;
       this.chartOptions.title.text = newValue;
     },
     points(newValue, idx) {
@@ -186,7 +223,7 @@ export default {
     chartType(newValue) {
       this.chartOptions.chart.type = newValue.toLowerCase();
       if (!this.titleUpdated) {
-        this.chartOptions.title.text = newValue
+        this.chartOptions.title.text = newValue;
       }
     },
     seriesColor(newValue) {
@@ -197,11 +234,15 @@ export default {
     }
   },
   methods: {
+    redraw() {
+      // this.$refs.highchart.chart.xAxis[0].isDirty = true
+      this.$refs.highchart.chart.reflow();
+    },
     seriesColor(idx) {
-      return this.chartOptions.series[idx].color
+      return this.chartOptions.series[idx].color;
     },
     updateColor($event, idx) {
-      this.chartOptions.series[idx].color = $event.target.value
+      this.chartOptions.series[idx].color = $event.target.value;
     }
   }
 };
@@ -212,9 +253,6 @@ export default {
   display: flex;
   flex-flow: row-reverse nowrap;
   justify-content: space-around;
-}
-.chart {
-  min-height: 50rem;
 }
 input[type="color"]::-webkit-color-swatch-wrapper {
   padding: 0;
@@ -237,9 +275,9 @@ select {
   background: #eee;
   border: 0;
   height: 2rem;
-  text-indent: .5rem;
-  margin: .5rem .25rem;
-  border-radius: .15rem;
+  text-indent: 0.5rem;
+  margin: 0.5rem 0.25rem;
+  border-radius: 0.15rem;
 }
 
 .data-inputs {
@@ -259,7 +297,7 @@ select {
 
 ::v-deep .tooltip {
   background: white;
-  padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
   opacity: 1;
 }
 ::v-deep .tooltip-text {
@@ -271,5 +309,7 @@ select {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+}
+::v-deep .legend-label {
 }
 </style>
