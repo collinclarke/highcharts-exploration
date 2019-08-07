@@ -10,20 +10,13 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Deploys to github pages
 ```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
+./deploy.sh
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Live
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+https://collinclarke.github.com/highcharts-exploration
+
+
