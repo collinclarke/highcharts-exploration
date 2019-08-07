@@ -1,23 +1,21 @@
 <template>
   <div class="chartElem">
-    <section class="column">
-      <highcharts
-        class="chart"
-        :style="{'height': chartHeight + 'vh', 'width': chartWidth + '%'}"
-        ref="highchart"
-        :options="chartOptions"
-        :updateArgs="updateArgs"
-      ></highcharts>
-    </section>
+    <highcharts
+      class="chart"
+      :style="{'height': chartHeight + 'vh', 'width': chartWidth + '%'}"
+      ref="highchart"
+      :options="chartOptions"
+      :updateArgs="updateArgs"
+    ></highcharts>
     <section class="column">
       <div class="row">
         <label style="display: block;">
           Change Chart Height
-          <input v-model="chartHeight" type="number" />
+          <input v-model="chartHeight" type="number" max="100" min="25" />
         </label>
         <label style="display: block;">
           Change Chart Width
-          <input v-model="chartWidth" type="number" />
+          <input v-model="chartWidth" type="number" max="100" min="25" />
         </label>
       </div>
       <div class="row">
@@ -28,11 +26,11 @@
             <input v-model="chartOptions.xAxis.categories[index]" />
           </div>
           <br />
-          <label>
+          <label style="display: block;">
             Font Size
             <input type="number" v-model="chartOptions.fontSize" />
           </label>
-          <label>
+          <label style="display: block;">
             Max Lines
             <input type="number" v-model="chartOptions.maxLines" />
           </label>
@@ -107,7 +105,7 @@ export default {
       title: "Stacked bar chart",
       points: [10, 0, 8, 2, 6, 4, 5, 5],
       chartHeight: 80,
-      chartWidth: 100,
+      chartWidth: 50,
       maxLines: 5,
       titleUpdated: false,
       chartType: "Bar",
@@ -310,6 +308,7 @@ select {
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
-::v-deep .legend-label {
+.column {
+  flex: 1;
 }
 </style>
