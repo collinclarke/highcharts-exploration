@@ -6,27 +6,20 @@
     <section class="column">
       <div class="row">
         <div>
-          <h3>Flexibly change the labels:</h3>
+          <h3>Change the labels:</h3>
           <h4>Categories:</h4>
           <div v-for="(label, index) in chartOptions.xAxis.categories" :key="index">
             <input v-model="chartOptions.xAxis.categories[index]"/>
           </div>
-          <!-- <form class="row points">
-            <div class="data-inputs" v-for="index in 3" :key="index">
-              <p>{{chartOptions.series[index - 1].name}}</p>
-              <input
-                v-model.number="chartOptions.series[index - 1].data[0]"
-                type="number"
-                class="numberInput"
-              />
-            </div>
-          </form> -->
+          <!-- <label>Max Lines
+            <input type="number" v-model="maxLines">
+          </label> -->
         </div>
       </div>
       <div class="row">
         <div id="title">
           <h3>Set chart title dynamically:</h3>
-          <input type="text" v-model="title" />
+          <input type="text" v-model="title"/>
         </div>
         <div id="chartType">
           <h3>Select chart type:</h3>
@@ -84,8 +77,9 @@ export default {
   },
   data() {
     return {
-      title: "",
+      title: "Stacked bar chart",
       points: [10, 0, 8, 2, 6, 4, 5, 5],
+      maxLines: 5,
       titleUpdated: false,
       chartType: "Bar",
       colorInputIsSupported: null,
@@ -135,7 +129,7 @@ export default {
           shadow: false,
           formatter: function() {
             return (
-              '<div class="tooltip"><b>' +
+              `<div class="tooltip"><b>` +
               this.series.name +
               "</b>" +
               '<br><div class="tooltip-text">' +
@@ -258,7 +252,7 @@ select {
 ::v-deep .label {
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 4;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
 </style>
